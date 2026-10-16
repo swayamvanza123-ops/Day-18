@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172b4d">
+  <title>InventoryPro | Smart Inventory Management</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a href="#dashboard" class="brand">
+      <span class="brand-icon">◆</span>
+      <span>Inventory<span class="brand-blue">Pro</span>
+        <small>Smart Inventory Management</small>
+      </span>
+    </a>
+
+    <nav class="side-nav">
+      <a class="nav-link active" href="#dashboard">▦ &nbsp; Dashboard</a>
+      <a class="nav-link" href="#add-product">＋ &nbsp; Add Product</a>
+      <a class="nav-link" href="#products">▣ &nbsp; Products</a>
+      <a class="nav-link" href="#products" id="lowStockNav">⚠ &nbsp; Low Stock</a>
+      <a class="nav-link" href="#dashboard">₹ &nbsp; Inventory Value</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <span class="online-dot"></span> Inventory system ready
+      <small>InventoryPro · Product Management</small>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">INVENTORY MANAGEMENT</p>
+        <h1>Dashboard Overview</h1>
+        <p class="subtitle">Manage products, monitor stock and track inventory value.</p>
+      </div>
+      <a href="#add-product" class="top-add">＋ Add Product</a>
+    </header>
+
+    <section id="dashboard" class="stats-grid">
+      <article class="stat-card">
+        <div class="stat-icon purple-bg">▦</div>
+        <p>Total Products</p>
+        <h2 id="totalProducts">0</h2>
+        <small>Products in your inventory</small>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-icon green-bg">₹</div>
+        <p>Inventory Value</p>
+        <h2 id="inventoryValue">₹0</h2>
+        <small>Price × available quantity</small>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-icon orange-bg">⚠</div>
+        <p>Low Stock</p>
+        <h2 id="lowStock">0</h2>
+        <small>Products with 1–9 units</small>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-icon red-bg">▤</div>
+        <p>Out of Stock</p>
+        <h2 id="outOfStock">0</h2>
+        <small>Products with zero units</small>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-icon blue-bg">▤</div>
+        <p>Total Stock</p>
+        <h2 id="totalStock">0</h2>
+        <small>Total available units</small>
+      </article>
+    </section>
+
+    <section id="add-product" class="panel">
+      <div class="panel-heading">
+        <div class="heading-symbol">＋</div>
+        <div>
+          <h2 id="formHeading">Add New Product</h2>
+          <p>Enter product information and upload a product image.</p>
+        </div>
+      </div>
+
+      <form id="productForm">
+        <div class="form-grid">
+          <label>
+            Product Name <span class="required">*</span>
+            <input id="productName" name="productName" required minlength="3"
+                   maxlength="100" placeholder="e.g. Dell Laptop">
+          </label>
+
+          <label>
+            Category <span class="required">*</span>
+            <select id="productCategory" name="productCategory" required>
+              <option value="">Choose category</option>
+              <option>Electronics</option>
+              <option>Accessories</option>
+              <option>Furniture</option>
+              <option>Other</option>
+            </select>
+          </label>
+
+          <label>
+            Supplier Name <span class="required">*</span>
+            <input id="productSupplier" name="productSupplier" required
+                   placeholder="Enter supplier name">
+          </label>
+
+          <label>
+            Price (₹) <span class="required">*</span>
+            <input id="productPrice" name="productPrice" type="number"
+                   min="0.01" max="1000000000" step="0.01" required
+                   placeholder="Enter price">
+          </label>
+
+          <label>
+            Available Quantity <span class="required">*</span>
+            <input id="productStock" name="productStock" type="number"
+                   min="0" max="1000000000" step="1" required
+                   placeholder="Enter quantity">
+          </label>
+
+          <label>
+            Choose Product Image
+            <input id="productImage" name="productImage" type="file"
+                   accept="image/*">
+            <span class="field-hint">JPG, PNG or WebP · Maximum 2 MB</span>
+          </label>
+
+          <label class="full-width">
+            Product Description <span class="required">*</span>
+            <textarea id="productDescription" name="productDescription"
+                      required minlength="10" maxlength="1000"
+                      placeholder="Describe your product, its features and uses..."></textarea>
+          </label>
+        </div>
+
+        <div class="upload-area">
+          <div>
+            <h3>Product Image Preview</h3>
+            <p id="imageFileName">No image selected. A placeholder will be used.</p>
+          </div>
+          <img id="imagePreviewImg"
+               src="https://placehold.co/500x300/f0f4fb/7a8aa5?text=Product+Image"
+               alt="Selected product preview">
+        </div>
+
+        <div class="form-actions">
+          <button id="submitBtn" class="primary-btn" type="submit">＋ Add Product</button>
+          <button id="cancelEdit" class="secondary-btn hidden" type="button">Cancel</button>
+          <button id="clearForm" class="text-btn" type="button">Clear Form</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="products" class="panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">YOUR INVENTORY</p>
+          <h2>Product Collection</h2>
+          <p>Search, filter, edit or view the details of your products.</p>
+        </div>
+        <input id="searchInput" class="search-input" type="search"
+               placeholder="⌕  Search products...">
+      </div>
+
+      <div class="filter-row">
+        <div class="category-filters" id="categoryFilters">
+          <button type="button" class="filter-btn active" data-category="All">All Products</button>
+          <button type="button" class="filter-btn" data-category="Electronics">Electronics</button>
+          <button type="button" class="filter-btn" data-category="Accessories">Accessories</button>
+          <button type="button" class="filter-btn" data-category="Furniture">Furniture</button>
+          <button type="button" class="filter-btn" data-category="Other">Other</button>
+        </div>
+
+        <select id="stockFilter" class="stock-filter" aria-label="Filter by stock status">
+          <option value="All">All stock statuses</option>
+          <option value="In Stock">In Stock</option>
+          <option value="Low Stock">Low Stock</option>
+          <option value="Out of Stock">Out of Stock</option>
+        </select>
+      </div>
+
+      <div class="products-meta">
+        <span id="productCount">0 products</span>
+        <span>Product images are fitted to a consistent size</span>
+      </div>
+
+      <div id="productGrid" class="product-grid"></div>
+    </section>
+
+    <footer>© <span id="currentYear"></span> InventoryPro · Smart Inventory Management</footer>
+  </main>
+
+  <!-- Product details modal -->
+  <div id="productModal" class="modal-overlay" role="dialog"
+       aria-modal="true" aria-labelledby="modalProductName" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-heading">
+        <div>
+          <p class="eyebrow">PRODUCT INFORMATION</p>
+          <h2 id="modalProductName">Product Details</h2>
+        </div>
+        <button id="modalX" class="modal-x" type="button" aria-label="Close">×</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-image-wrap">
+          <img id="modalProductImage" alt="Product">
+        </div>
+
+        <div class="modal-info">
+          <div class="detail-row"><span>Product ID</span><strong id="modalProductId">—</strong></div>
+          <div class="detail-row"><span>Category</span><strong id="modalCategory">—</strong></div>
+          <div class="detail-row"><span>Price</span><strong id="modalPrice">—</strong></div>
+          <div class="detail-row"><span>Available Quantity</span><strong id="modalQuantity">—</strong></div>
+          <div class="detail-row"><span>Supplier Name</span><strong id="modalSupplier">—</strong></div>
+          <div class="detail-row"><span>Stock Status</span><strong id="modalStatus">—</strong></div>
+
+          <div class="description-box">
+            <h3>Product Description</h3>
+            <p id="modalDescription">—</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="modalClose" class="secondary-btn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
